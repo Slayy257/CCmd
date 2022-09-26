@@ -30,7 +30,7 @@ int getline(const char *msg, char *buff, int len)
     }
 }
 
-char *getargs(char *buffer)
+char **getargs(char *buffer)
 {
     args_t* args = malloc(sizeof(args_t));
     args->size = 0;
@@ -42,10 +42,11 @@ char *getargs(char *buffer)
         if (!isspace(buffer[i])) {
             word[currIndex] = buffer[i];
             currIndex++;
+            puts(word);
         }
         else {
             push_args(args, word);
-            sprintf_s(word, MAX_ARG_BUFFER_SIZE, "");
+            memset(word, 0, sizeof word);
             currIndex = 0;
         }
     }

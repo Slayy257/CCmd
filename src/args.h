@@ -8,6 +8,6 @@ typedef struct {
     char** data;
 } args_t;
 
-void push_args(args_t* args, const char* arg);
+void push_args(args_t* args, char* arg);
 
 #endif ARGS_H

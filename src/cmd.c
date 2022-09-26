@@ -29,10 +29,7 @@ int main(void) {
         }
         else {
             //error output = process_buffer(buffer);
-            char* args = getargs(buffer);
-
-            for (int i = 0; i < sizeof(args); i++)
-                puts(args[i]);
+            char** args = getargs(buffer);
             //error output = process_buffer(args);
         }
     }
@@ -58,9 +55,9 @@ error process_buffer(char **buffer) {
             if (!g_cmd.clear(&err))
                 throw();
         
-        if (strcmp(buffer[0], "get") == 0) {
+        /*if (strcmp(buffer[0], "get") == 0) {
 
-        }
+        }*/
     }
     catch (...) {
         log_error(err);
