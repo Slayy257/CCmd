@@ -32,33 +32,35 @@ int getline(const char *msg, char *buff, int len)
 
 char *getargs(char *buffer)
 {
-    args_t* args;
-    char *word = "";
+    args_t* args = malloc(sizeof(args_t));
+    args->size = 0;
+    args->data = NULL;
+    char word[MAX_ARG_BUFFER_SIZE] = "";
+    int currIndex = 0;
 
-    for (int i = 0; i < strlen(buffer); i++)
-    {
-        if (isspace(buffer[i]) != 0) {
-            puts("buffer != 0");
-            i++;
-            puts("push arg");
-            push_args(args, word);
-            word = "";
-            puts("arg pushed");
-            continue;
+    for (int i = 0; i < strlen(buffer); i++) {
+        if (!isspace(buffer[i])) {
+            word[currIndex] = buffer[i];
+            currIndex++;
         }
         else {
-            word += buffer[i];
-            continue;
+            push_args(args, word);
+            sprintf_s(word, MAX_ARG_BUFFER_SIZE, "");
+            currIndex = 0;
         }
-
-        puts("arg pushed");
-        puts("word");
     }
 
+    printf("[");
     for (int i = 0; i < args->size; i++)
     {
-        printf("%s", args->data[i]);
+        if (i == args->size - 1)
+            printf(" %s ", args->data[i]);
+        else {
+            printf(" %s,", args->data[i]);
+        }
     }
+
+    printf("]");
 
     char* datas = args->data;
     free(args->data);

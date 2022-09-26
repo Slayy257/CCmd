@@ -6,7 +6,7 @@
 #include "command.h"
 #include "utils.h"
 
-error process_buffer(char *buffer);
+error process_buffer(char **buffer);
 void log_error(error err);
 void print_headers();
 
@@ -31,9 +31,9 @@ int main(void) {
             //error output = process_buffer(buffer);
             char* args = getargs(buffer);
 
-            for (int i = 0; i < sizeof(args); i++) {
+            for (int i = 0; i < sizeof(args); i++)
                 puts(args[i]);
-            }
+            //error output = process_buffer(args);
         }
     }
 
@@ -41,24 +41,24 @@ int main(void) {
     return 0;
 }
 
-error process_buffer(char *buffer) {
+error process_buffer(char **buffer) {
 
     error err;
 
     try {
-        if (strcmp(buffer, "exit") == 0)
+        if (strcmp(buffer[0], "exit") == 0)
              if (!g_cmd.exit(&err))
                 throw();
 
-        if (strcmp(buffer, "version") == 0)
+        if (strcmp(buffer[0], "version") == 0)
             if (!g_cmd.version(&err))
                 throw();
 
-        if (strcmp(buffer, "clear") == 0)
+        if (strcmp(buffer[0], "clear") == 0)
             if (!g_cmd.clear(&err))
                 throw();
         
-        if (strcmp(buffer, "get") == 0) {
+        if (strcmp(buffer[0], "get") == 0) {
 
         }
     }

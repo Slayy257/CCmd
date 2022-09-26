@@ -5,7 +5,7 @@
 
 typedef struct {
     size_t size;
-    char* data;
+    char** data;
 } args_t;
 
 void push_args(args_t* args, const char* arg);
