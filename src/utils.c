@@ -5,7 +5,6 @@
 #include <ctype.h>
 
 #include "utils.h"
-#include "args.h"
 
 int getline(const char *msg, char *buff, int len)
 {
@@ -30,7 +29,7 @@ int getline(const char *msg, char *buff, int len)
     }
 }
 
-char **getargs(char *buffer)
+args_t* getargs(char *buffer)
 {
     args_t* args = malloc(sizeof(args_t));
     args->size = 0;
@@ -50,28 +49,11 @@ char **getargs(char *buffer)
         }
         else {
 pa:
-            puts(word); 
-            push_args(args, word);
+            push_args(args, _strdup(word));
             memset(word, 0, sizeof word);
             currIndex = 0;
         }
     }
 
-    printf("[");
-    for (int i = 0; i < args->size; i++)
-    {
-        if (i == args->size - 1)
-            printf(" %s ", args->data[i]);
-        else {
-            printf(" %s,", args->data[i]);
-        }
-    }
-
-    printf("]");
-
-    char* datas = args->data;
-    free(args->data);
-    free(args);
-
-    return datas;
+    return args;
 }

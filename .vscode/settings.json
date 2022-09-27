@@ -6,6 +6,7 @@
         "string.h": "c",
         "stdlib.h": "c",
         "array": "c",
-        "string_view": "c"
+        "string_view": "c",
+        "args.h": "c"
     }
 }
