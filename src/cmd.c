@@ -43,9 +43,13 @@ error process_buffer(args_t* args) {
     error err;
 
     try {
-        if (strcmp(args->data[0], "exit") == 0)
-             if (!g_cmd.exit(&err))
+        if (strcmp(args->data[0], "exit") == 0) {
+            free(args->data);
+            free(args);
+            
+            if (!g_cmd.exit(&err))
                 throw();
+        }
 
         if (strcmp(args->data[0], "version") == 0)
             if (!g_cmd.version(&err))
