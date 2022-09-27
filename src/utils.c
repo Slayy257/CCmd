@@ -40,11 +40,17 @@ char **getargs(char *buffer)
 
     for (int i = 0; i < strlen(buffer); i++) {
         if (!isspace(buffer[i])) {
+            if (i == strlen(buffer) - 1) {
+                word[currIndex] = buffer[i];
+                goto pa;
+            }
+
             word[currIndex] = buffer[i];
             currIndex++;
-            puts(word);
         }
         else {
+pa:
+            puts(word); 
             push_args(args, word);
             memset(word, 0, sizeof word);
             currIndex = 0;
