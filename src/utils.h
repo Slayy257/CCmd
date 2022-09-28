@@ -1,9 +1,16 @@
 #define UTILS_H
 #ifdef UTILS_H
+#define MAX_BUFFER_SIZE 128
 
 #include "args.h"
 
+typedef struct {
+    int errcode;
+    char message[MAX_BUFFER_SIZE];
+} error;
+
 int getline(const char *msg, char *buff, int len);
-args_t* getargs(char* buffer);
+args_t* get_args(char* buffer);
+bool exec_cmd(bool function(error*, args_t*), error* err, args_t* args);
 
 #endif UTILS_H

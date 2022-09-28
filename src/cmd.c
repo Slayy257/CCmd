@@ -4,7 +4,6 @@
 #include <stdbool.h>
 
 #include "command.h"
-#include "utils.h"
 
 error process_buffer(args_t* buffer);
 void log_error(error err);
@@ -29,7 +28,7 @@ int main(void) {
         }
         else {
             //error output = process_buffer(buffer);
-            args_t* args = getargs(buffer);
+            args_t* args = get_args(buffer);
             error output = process_buffer(args);
         }
     }
@@ -42,33 +41,29 @@ error process_buffer(args_t* args) {
 
     error err;
 
+    // todo -> pass args in arg to function to free them afterwards
+
     try {
-        if (strcmp(args->data[0], "exit") == 0) {
-            free(args->data);
-            free(args);
-            
-            if (!g_cmd.exit(&err))
+        if (strcmp(args->data[0], "exit") == 0)
+            if (!exec_cmd(g_cmd.exit, &err, args))
                 throw();
-        }
 
         if (strcmp(args->data[0], "version") == 0)
-            if (!g_cmd.version(&err))
+            if (!exec_cmd(g_cmd.version, &err, args))
                 throw();
 
         if (strcmp(args->data[0], "clear") == 0)
-            if (!g_cmd.clear(&err))
+            if (!exec_cmd(g_cmd.clear, &err, args))
                 throw();
         
-        if (strcmp(args->data[0], "get") == 0) {
-            puts("yes");
-        }
+        if (strcmp(args->data[0], "get") == 0)
+            if (!exec_cmd(g_cmd.get, &err, args))
+                throw();
+
     }
     catch (...) {
         log_error(err);
     }
-
-    free(args->data);
-    free(args);
 
     return err;
 }

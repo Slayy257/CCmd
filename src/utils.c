@@ -29,7 +29,17 @@ int getline(const char *msg, char *buff, int len)
     }
 }
 
-args_t* getargs(char *buffer)
+bool exec_cmd(bool function(error*, args_t*), error* err, args_t* args) {
+    bool result = true;
+    if (!function(&err, args)) result = false;
+
+    free(args->data);
+    free(args);
+
+    return result;
+}
+
+args_t* get_args(char *buffer)
 {
     args_t* args = malloc(sizeof(args_t));
     args->size = 0;

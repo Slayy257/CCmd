@@ -1,21 +1,17 @@
 #define COMMAND_H
 #ifdef COMMAND_H
 
+#include "utils.h"
+
 #define try bool __HadError=false;
 #define catch(x) ExitJmp:if(__HadError)
 #define throw(x) {__HadError=true;goto ExitJmp;}
-#define MAX_BUFFER_SIZE 128
 
 typedef struct {
-    int errcode;
-    char message[MAX_BUFFER_SIZE];
-} error;
-
-typedef struct {
-    bool (*exit)(error *err);
-    bool (*version)(error *err);
-    bool (*clear)(error *err);
-    bool (*get)(error *err, char args[]);
+    bool (*exit)(error *err, args_t *args);
+    bool (*version)(error *err, args_t *args);
+    bool (*clear)(error *err, args_t *args);
+    bool (*get)(error *err, args_t *args);
 } cmd;
 
 void init_commands(cmd* cmd);
