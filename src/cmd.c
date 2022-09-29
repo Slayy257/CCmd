@@ -41,8 +41,6 @@ error process_buffer(args_t* args) {
 
     error err;
 
-    // todo -> pass args in arg to function to free them afterwards
-
     try {
         if (strcmp(args->data[0], "exit") == 0)
             if (!exec_cmd(g_cmd.exit, &err, args))

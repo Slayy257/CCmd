@@ -31,7 +31,7 @@ int getline(const char *msg, char *buff, int len)
 
 bool exec_cmd(bool function(error*, args_t*), error* err, args_t* args) {
     bool result = true;
-    if (!function(&err, args)) result = false;
+    if (!function(err, args)) result = false;
 
     free(args->data);
     free(args);

@@ -64,8 +64,5 @@ bool cmd_get(error* err, args_t *args) {
 
     // todo
 
-    if (strcmp(args->data[1], "exe") == 0)
-        return false;
-
     return true;
 }
