@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <stdbool.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
+#include <unistd.h>
 
 #include "command.h"
 
@@ -62,7 +63,7 @@ bool cmd_clear(error* err, args_t *args) {
 bool cmd_get(error* err, args_t *args) {
     set_err(err, "get", 3);
 
-    // todo
+    // todo...
 
     return true;
 }

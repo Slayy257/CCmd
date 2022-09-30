@@ -27,13 +27,11 @@ int main(void) {
             puts("No input received.");
         }
         else {
-            //error output = process_buffer(buffer);
             args_t* args = get_args(buffer);
             error output = process_buffer(args);
         }
     }
-
-    puts("Bye :)");
+    
     return 0;
 }
 
