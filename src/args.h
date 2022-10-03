@@ -1,7 +1,7 @@
 #define ARGS_H
 #ifdef ARGS_H
 
-#define MAX_ARG_BUFFER_SIZE 32
+#define MAX_BUFFER_SIZE 128
 
 typedef struct {
     size_t size;
@@ -9,5 +9,6 @@ typedef struct {
 } args_t;
 
 void push_args(args_t* args, const char* arg);
+void free_arg(args_t* args);
 
 #endif ARGS_H

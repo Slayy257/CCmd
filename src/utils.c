@@ -6,6 +6,7 @@
 
 #include "utils.h"
 
+bool debug_mode = false;
 
 int getline(const char *msg, char *buff, int len)
 {
@@ -34,8 +35,21 @@ bool exec_cmd(bool function(error*, args_t*), error* err, args_t* args) {
     bool result = true;
     if (!function(err, args)) result = false;
 
-    free(args->data);
-    free(args);
+
+    if (debug_mode) {
+        printf("[");
+
+        for (int i = 0; i < args->size; i++) {
+            if (i == args->size - 1)
+                printf(" %s ", args->data[i]);
+            else
+                printf(" %s,", args->data[i]);
+        }
+
+        printf("]\n");
+    }
+
+    free_arg(args);
 
     return result;
 }
@@ -45,7 +59,7 @@ args_t* get_args(char *buffer)
     args_t* args = malloc(sizeof(args_t));
     args->size = 0;
     args->data = NULL;
-    char word[MAX_ARG_BUFFER_SIZE] = "";
+    char word[MAX_BUFFER_SIZE] = "";
     int currIndex = 0;
 
     for (int i = 0; i < strlen(buffer); i++) {
@@ -60,9 +74,11 @@ args_t* get_args(char *buffer)
         }
         else {
 pa:
-            push_args(args, _strdup(word));
-            memset(word, 0, sizeof word);
-            currIndex = 0;
+            if (currIndex != 0) {
+                push_args(args, _strdup(word));
+                memset(word, 0, sizeof word);
+                currIndex = 0;
+            }
         }
     }
 

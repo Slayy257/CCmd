@@ -30,9 +30,7 @@ bool cmd_exit(error* err, args_t *args) {
     
     // exception
 
-    free(args->data);
-    free(args);
-
+    free_arg(args);
     exit(0);
 
     return true;

@@ -11,10 +11,17 @@ void print_headers();
 
 cmd g_cmd;
 
-int main(void) {
+int main(int argc, char** argv) {
 
     print_headers();
     init_commands(&g_cmd);
+
+    if (argc > 1) {
+        if (strcmp(argv[1], "-d") == 0) {
+            debug_mode = true;
+            puts("Debug mode activated");
+        }
+    }
 
     while (1) {
         char buffer[MAX_BUFFER_SIZE];
