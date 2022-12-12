@@ -4,9 +4,19 @@
 #include <stdbool.h>
 #include "args.h"
 
+args_t* new_args() {
+    args_t* args = malloc(sizeof(args_t));
+    args->size = 0;
+    args->data = NULL;
+
+    return args;
+}
+
 void push_args(args_t* args, const char* arg) {
     args->size++;
-    args->data = realloc(args->data, args->size * MAX_BUFFER_SIZE);
+    int* alloc = realloc(args->data, args->size * MAX_BUFFER_SIZE);
+    if (!alloc) { perror("Failed Argument Allocation"); return; }
+    else args->data = alloc;
     args->data[args->size -  1] = arg;
 }
 

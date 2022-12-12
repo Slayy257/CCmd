@@ -7,12 +7,12 @@
 #include "command.h"
 
 // commands
-bool cmd_exit(error* err, args_t *args);
-bool cmd_version(error* err, args_t *args);
-bool cmd_clear(error* err, args_t *args);
-bool cmd_get(error* err, args_t *args);
+bool cmd_exit(error_t* err, args_t *args);
+bool cmd_version(error_t* err, args_t *args);
+bool cmd_clear(error_t* err, args_t *args);
+bool cmd_get(error_t* err, args_t *args);
 
-void set_err(error* err, const char* name, int errcode) {
+void set_err(error_t* err, const char* name, int errcode) {
     _snprintf_s(err->message, sizeof(err->message), MAX_BUFFER_SIZE, name);
     err->errcode = 1;
 }
@@ -25,7 +25,7 @@ void init_commands(cmd* cmd) {
     cmd->get = cmd_get;
 }
 
-bool cmd_exit(error* err, args_t *args) {
+bool cmd_exit(error_t* err, args_t *args) {
     set_err(err, "exit", 1);
     
     // exception
@@ -36,14 +36,14 @@ bool cmd_exit(error* err, args_t *args) {
     return true;
 }
 
-bool cmd_version(error* err, args_t *args) {
+bool cmd_version(error_t* err, args_t *args) {
     set_err(err, "version", 2);
     puts("v1.0.0");
 
     return true;
 }
 
-bool cmd_clear(error* err, args_t *args) {
+bool cmd_clear(error_t* err, args_t *args) {
 
 #if defined(WIN32)
     set_err(err, "cls system failed.", 4);
@@ -58,10 +58,10 @@ bool cmd_clear(error* err, args_t *args) {
     return true;
 }
 
-bool cmd_get(error* err, args_t *args) {
+bool cmd_get(error_t* err, args_t *args) {
     set_err(err, "get", 3);
 
-    // todo...
+    // todo -> http request custom with args
 
     return true;
 }

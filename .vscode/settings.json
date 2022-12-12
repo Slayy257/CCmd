@@ -7,6 +7,8 @@
         "stdlib.h": "c",
         "array": "c",
         "string_view": "c",
-        "args.h": "c"
+        "args.h": "c",
+        "command.h": "c",
+        "utils.h": "c"
     }
 }

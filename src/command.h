@@ -8,10 +8,10 @@
 #define throw(x) {__HadError=true;goto ExitJmp;}
 
 typedef struct {
-    bool (*exit)(error *err, args_t *args);
-    bool (*version)(error *err, args_t *args);
-    bool (*clear)(error *err, args_t *args);
-    bool (*get)(error *err, args_t *args);
+    bool (*exit)(error_t *err, args_t *args);
+    bool (*version)(error_t *err, args_t *args);
+    bool (*clear)(error_t *err, args_t *args);
+    bool (*get)(error_t *err, args_t *args);
 } cmd;
 
 void init_commands(cmd* cmd);

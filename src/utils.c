@@ -16,7 +16,7 @@ int getline(const char *msg, char *buff, int len)
         fflush(stdout);
     }
 
-    if (fgets(buff, len, stdin) == NULL || strcmp(buff, "\n") == 0)
+    if (fgets(buff, len, stdin) == NULL || cmp(buff, "\n"))
     {
         return 1;
     }
@@ -31,34 +31,16 @@ int getline(const char *msg, char *buff, int len)
     }
 }
 
-bool exec_cmd(bool function(error*, args_t*), error* err, args_t* args) {
+bool exec_cmd(bool function(error_t*, args_t*), error_t* err, args_t* args) {
     bool result = true;
     if (!function(err, args)) result = false;
-
-
-    if (debug_mode) {
-        printf("[");
-
-        for (int i = 0; i < args->size; i++) {
-            if (i == args->size - 1)
-                printf(" %s ", args->data[i]);
-            else
-                printf(" %s,", args->data[i]);
-        }
-
-        printf("]\n");
-    }
-
     free_arg(args);
-
     return result;
 }
 
 args_t* get_args(char *buffer)
 {
-    args_t* args = malloc(sizeof(args_t));
-    args->size = 0;
-    args->data = NULL;
+    args_t* args = new_args();
     char word[MAX_BUFFER_SIZE] = "";
     int currIndex = 0;
 
@@ -83,4 +65,18 @@ pa:
     }
 
     return args;
+}
+
+void dbg(args_t* args) {
+    printf("command with args received -> [");
+
+    for (int i = 0; i < args->size; i++)
+    {
+        if (i == args->size - 1)
+            printf(" %s ", args->data[i]);
+        else
+            printf(" %s,", args->data[i]);
+    }
+
+    printf("]\n");
 }

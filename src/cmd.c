@@ -5,8 +5,8 @@
 
 #include "command.h"
 
-error process_buffer(args_t* buffer);
-void log_error(error err);
+error_t process_buffer(args_t* buffer);
+void log_error(error_t err);
 void print_headers();
 
 cmd g_cmd;
@@ -16,12 +16,10 @@ int main(int argc, char** argv) {
     print_headers();
     init_commands(&g_cmd);
 
-    if (argc > 1) {
-        if (strcmp(argv[1], "-d") == 0) {
-            debug_mode = true;
-            puts("Debug mode activated");
-        }
-    }
+    if (argc > 0)
+        for (int i = 0; i < argc; i++)
+            if (cmp(argv[i], "-d"))
+                debug_mode = true;
 
     while (1) {
         char buffer[MAX_BUFFER_SIZE];
@@ -35,31 +33,34 @@ int main(int argc, char** argv) {
         }
         else {
             args_t* args = get_args(buffer);
-            error output = process_buffer(args);
+
+            if (debug_mode)
+                dbg(args);
+                
+            error_t output = process_buffer(args);
         }
     }
     
     return 0;
 }
 
-error process_buffer(args_t* args) { 
-
-    error err;
+error_t process_buffer(args_t* args) { 
+    error_t err;
 
     try {
-        if (strcmp(args->data[0], "exit") == 0)
+        if (cmp(args->data[0], "exit"))
             if (!exec_cmd(g_cmd.exit, &err, args))
                 throw();
 
-        if (strcmp(args->data[0], "version") == 0)
+        if (cmp(args->data[0], "version"))
             if (!exec_cmd(g_cmd.version, &err, args))
                 throw();
 
-        if (strcmp(args->data[0], "clear") == 0)
+        if (cmp(args->data[0], "clear"))
             if (!exec_cmd(g_cmd.clear, &err, args))
                 throw();
         
-        if (strcmp(args->data[0], "get") == 0)
+        if (cmp(args->data[0], "get"))
             if (!exec_cmd(g_cmd.get, &err, args))
                 throw();
 
@@ -71,7 +72,7 @@ error process_buffer(args_t* args) {
     return err;
 }
 
-void log_error(error err) {
+void log_error(error_t err) {
     printf("\nError Thrown: %s\nError Code: %i\n", err.message, err.errcode);
 }
 

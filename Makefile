@@ -18,5 +18,5 @@ utils.o: ./src/utils.c ./src/utils.h
 	clang -c ./src/utils.c
 
 cl:
-	del *.o
-	cls
+	rm *.o
+	clear
